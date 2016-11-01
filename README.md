@@ -1,15 +1,12 @@
 # Serine-Protocol
 
-1.	The Serine Protocol is aimed at allowing communication among small microcontroller as well as with computers and humans. The hardware infrastructure should allow the configuration of a network of virtual devices, which is intended to represent a real device, instrument, or equipment that should exchange messages among them.
-2.	Message is a variable-size string of ASCII characters ending by a semicolon (code 59). Only a subset of the ASCII codes are used to compose a message:
-2.1.	Codes 32 (space) and below should be suppressed from the string before interpreting it as a message.
-2.2.	Code 33 (!) informs that any other previously received character or complete messages not yet processed should be disregarded.
-2.3.	Although codes above 126 are allowed, their usage is strongly discouraged whether the messages are intended to be exchanged with humans.
-3.	Each virtual device has an identification string containing only ASCII characters in the range of codes 34 (“) and 126 (~), except for code 59 (;), and this string should be unique among all the possible virtual devices that are or can be engaged in the network.
-4.	Each virtual device is identified by one ASCII characters in the range of codes 34 (“) and 126 (~), except for code 59 (;), and it must be unique in the network.
-4.1.	The first character in a message identifies the addressed virtual device.
-4.2.	The second character in a message identifies the sender of the message, i.e., the virtual device to which a message should be send in case of reply.
-4.3.	The virtual device B (code 66) is a reserved virtual device that means broadcast. When a message is send to B, all virtual devices should handle it.
-5.	The content of the message starts at the third position and should be interpreted from this position on up to the ending semicolon.
-5.1.	A content starting with and I (code 73) is a reserved command that ask the identification of the virtual device. As the answer, the virtual device should send back a message with the content starting with an i (code 105) followed by its identification string.
-5.2.	A content starting with Ix (codes 73 and 120) renames the addressed device using the first character after the Ix command, if the remainder of the content matches the identification string contained in the remainder content of the message.
+	Serine is an abbreviation of Serial Network and a chemical compound – after all, the protocol was born in a chemistry laboratory. Serine has two isomers: L-serine, the well-known amino acid, and D-serine, a signaling substance in bacteria and a neurotransmitter in humans. 
+	Serine Protocol is a light communication protocol intended to be used with small microcontrollers and some sort of serial communication channels, such as UART, RS232, I2C, USB, and so on. Some headlines guided its formulation and usage:
+•	The exchanged messages should be easily and unequivocally interpreted by a simple microcontroller.
+•	The messages should resist, as originally generated, to the particularities of all hardware and software protocols used over the entire network.
+•	The messages should be as readable and writable as possible by humans.
+	The messages are exchanged among several logical pieces named virtual devices. A virtual device is something that is visualized by the members of the network as an entity that is able to do things, reacts to the received messages, and produces its own messages to the other members. A virtual device is implemented on one or more pieces of hardware. Therefore:
+•	A virtual device may be implemented in one exclusive microcontroller;
+•	A virtual device may be implemented in two or more microcontrollers, each one responding for specific features of the virtual device;
+•	On the other hand, a microcontroller may be the site for two or more virtual devices.
+	The pieces of hardware are connected thru a physical network and they are responsible to decide through which communication channel a message must follow. Therefore, when a message is received, it has to know if the addressed device (first character of the message) is reachable through, for instance, the USB, UART, or Ethernet ports. The hardware piece sending the message does not know whether the destination was implemented in the next hardware piece, or the message will follow through two or more other hardware pieces and different communication channels. There is neither checking point, nor dynamic management of the physical network. Therefore, the designer must be watchful.
