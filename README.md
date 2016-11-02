@@ -20,13 +20,13 @@ The messages are exchanged among several logical pieces named virtual devices. A
 
 The pieces of hardware are connected thru a physical network and they are responsible to decide through which communication channel a message must follow. Therefore, when a message is received, it has to know if the addressed device (first character of the message) is reachable through, for instance, the USB, UART, or Ethernet ports. The hardware piece sending the message does not know whether the destination was implemented in the next hardware piece, or the message will follow through two or more other hardware pieces and different communication channels. There is neither checking point, nor dynamic management of the physical network. Therefore, the designer must be watchful.
 
-  - Some scientific papers in which the Serine Protocol (formerly LAIA Protocol) was used in developing of the instrumentation:
+### Some scientific papers in which the Serine Protocol (formerly LAIA Protocol) was used in developing of the instrumentation
 
-  Francisco, K. J. M. and C. L. do Lago. "A Compact and High-Resolution Version of a Capacitively Coupled Contactless Conductivity Detector." _Electrophoresis_ __30__, no. 19 (2009): 3458-3464. [doi:10.1002/elps.200900080](http://onlinelibrary.wiley.com/doi/10.1002/elps.200900080/abstract)
+- Francisco, K. J. M. and C. L. do Lago. "A Compact and High-Resolution Version of a Capacitively Coupled Contactless Conductivity Detector." _Electrophoresis_ __30__, no. 19 (2009): 3458-3464. [doi:10.1002/elps.200900080](http://onlinelibrary.wiley.com/doi/10.1002/elps.200900080/abstract)
   
-  da Costa, E. T., C. A. Neves, G. M. Hotta, D. T. R. Vidal, M. F. Barros, A. A. Ayon, C. D. Garcia and C. L. do Lago. "Unmanned Platform for Long-Range Remote Analysis of Volatile Compounds in Air Samples." _Electrophoresis_ __33__, no. 17 (2012): 2650-2659. [doi:10.1002/elps.201200273](http://onlinelibrary.wiley.com/doi/10.1002/elps.201200273/abstract)
+- da Costa, E. T., C. A. Neves, G. M. Hotta, D. T. R. Vidal, M. F. Barros, A. A. Ayon, C. D. Garcia and C. L. do Lago. "Unmanned Platform for Long-Range Remote Analysis of Volatile Compounds in Air Samples." _Electrophoresis_ __33__, no. 17 (2012): 2650-2659. [doi:10.1002/elps.201200273](http://onlinelibrary.wiley.com/doi/10.1002/elps.201200273/abstract)
   
-  Francisco, K. J. M. and C. L. do Lago. "A Capillary Electrophoresis System with Dual Capacitively Coupled Contactless Conductivity Detection and Electrospray Ionization Tandem Mass Spectrometry." _Electrophoresis_ __37__, no. 12 (2016): 1718-1724. [doi:10.1002/elps.201600005](http://onlinelibrary.wiley.com/doi/10.1002/elps.201600005/abstract)
+- Francisco, K. J. M. and C. L. do Lago. "A Capillary Electrophoresis System with Dual Capacitively Coupled Contactless Conductivity Detection and Electrospray Ionization Tandem Mass Spectrometry." _Electrophoresis_ __37__, no. 12 (2016): 1718-1724. [doi:10.1002/elps.201600005](http://onlinelibrary.wiley.com/doi/10.1002/elps.201600005/abstract)
 
 
 
