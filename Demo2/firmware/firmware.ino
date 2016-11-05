@@ -1,66 +1,50 @@
 // Arduino Firmware for ...
-#define VERSION "0.2"
+#define VERSION "0.3"
 
 #include "Arduino.h"
 #include "Serine.h"
 
-const char SPACE = ' ';
-const int MAX_MESSAGE = 32; // Actually, the maximum size of the message is MAX_MESSAGE - 1
-
 /* Virtual devices in this microcontroller */
-char ID_fool = 'f';
-char serial_fool[] = "123deOliveira4";
+SerineVirtualDevice fool = {'f', "t123deOliveira4haha"};
 
 SerineBuffer usb;
-char sender = '?'; // To be read from the message
+char sender = '?';
 
-void handleMessage(char message[]) {
+void inline handleFool(char *message) {
     char answer[MAX_MESSAGE];
-    if (message[0] == ID_fool) {
-        switch (message[2]) {
-            case 'I':
-                if (message[3] == 'x') {
-                    if (strcmp(serial_fool, message) < 0) ID_fool = message[4];
-                } else {
-                    answer[0] = message[1];
-                    answer[1] = ID_fool;
-                    answer[2] = 'i';
-                    answer[3] = NULL;
-                    strcat(answer, serial_fool);
-                    strcat(answer, ";");
-                    Serial.print(answer);
-                }
-                break;
-            default:
-                answer[0] = message[1];
-                answer[1] = ID_fool;
-                answer[2] = '?';
-                answer[3] = message[2];
-                answer[4] = ';';
-                answer[5] = NULL;
+    switch (message[2]) {
+        case 'I':
+            if (message[3] == 'x') {
+                serineChangeID(&fool, message);
+            } else {
+                serineAnswerID(message[1], fool, answer);
                 Serial.print(answer);
-        }
-    } else if (message[0] == 'B') {
-        switch (message[2]) {
-            case 'I':
-                answer[0] = message[1];
-                answer[1] = ID_fool;
-                answer[2] = 'i';
-                answer[3] = NULL;
-                strcat(answer, serial_fool);
-                strcat(answer, ";");
-                Serial.print(answer);
-                break;
-            default:
-                answer[0] = message[1];
-                answer[1] = ID_fool;
-                answer[2] = '?';
-                answer[3] = message[2];
-                answer[4] = ';';
-                answer[5] = NULL;
-                Serial.print(answer);
-        }
+            }
+            serineAnswerID(message[1], fool, answer);
+            Serial.print(answer);
+            break;
+        default:
+            serineIdontKnow(message, fool.id, answer);
+            Serial.print(answer);
     }
+}
+
+void inline handleBroadcast(char *message) {
+    char answer[MAX_MESSAGE];
+    switch (message[2]) {
+        case 'I':
+            serineAnswerID(message[1], fool, answer);
+            Serial.print(answer);
+            break;
+        default:
+            serineIdontKnow(message, fool.id, answer);
+            Serial.print(answer);
+    }
+}
+
+void inline handleMessage(char *message) {
+    if (message[0] == fool.id) handleFool(message);
+    else if (message[0] == 'B') handleBroadcast(message);
 }
 
 void setup() {
@@ -68,7 +52,7 @@ void setup() {
 }
 
 void loop() {
-    delay(1000);
+    delay(100);
     while (Serial.available() && usb.getSpace() > 1) usb.putChar(Serial.read());
     char message[MAX_MESSAGE];
     usb.getMessage(message);
