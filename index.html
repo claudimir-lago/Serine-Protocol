@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Serine-protocol by claudimir-lago</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Serine-protocol</h1>
+      <h2 class="project-tagline">A communication protocol for microcontroller-based instrumentation</h2>
+      <a href="https://github.com/claudimir-lago/Serine-Protocol" class="btn">View on GitHub</a>
+      <a href="https://github.com/claudimir-lago/Serine-Protocol/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/claudimir-lago/Serine-Protocol/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="serine-protocol" class="anchor" href="#serine-protocol" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Serine-Protocol</h1>
+
+<h5>
+<a id="serine-is-an-abbreviation-for-serial-network-and-a-chemical-compound--after-all-the-protocol-was-born-in-a-chemistry-laboratory-serine-has-two-optical-isomers-l-serine-the-well-known-proteinogenic-amino-acid-and-d-serine-a-signaling-substance-in-bacteria-and-a-neurotransmitter-in-humans-therefore-serine-is-anyway-about-communication-among-small-and-big-things" class="anchor" href="#serine-is-an-abbreviation-for-serial-network-and-a-chemical-compound--after-all-the-protocol-was-born-in-a-chemistry-laboratory-serine-has-two-optical-isomers-l-serine-the-well-known-proteinogenic-amino-acid-and-d-serine-a-signaling-substance-in-bacteria-and-a-neurotransmitter-in-humans-therefore-serine-is-anyway-about-communication-among-small-and-big-things" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><em>Serine is an abbreviation for Serial Network and a chemical compound – after all, the protocol was born in a chemistry laboratory. Serine has two optical isomers: L-serine, the well-known proteinogenic amino acid, and D-serine, a signaling substance in bacteria and a neurotransmitter in humans. Therefore, Serine is anyway about communication among small and big things.</em>
+</h5>
+
+<p>Serine Protocol is a light communication protocol intended to be used with small microcontrollers and some sort of serial communication channels, such as UART, RS232, I2C, USB, and so on. Some headlines guided its formulation and usage:</p>
+
+<ul>
+<li><p>The exchanged messages should be easily and unequivocally interpreted by a simple microcontroller.</p></li>
+<li><p>The messages should resist, as originally generated, to the particularities of all hardware and software protocols used over the entire network.</p></li>
+<li><p>The messages should be as readable and writable as possible by humans.</p></li>
+</ul>
+
+<p>The messages are exchanged among several logical pieces named virtual devices. A virtual device is something that is visualized by the members of the network as an entity that is able to do things, reacts to the received messages, and produces its own messages to the other members. A virtual device is implemented on one or more pieces of hardware. Therefore:</p>
+
+<ul>
+<li><p>A virtual device may be implemented in one exclusive microcontroller;</p></li>
+<li><p>A virtual device may be implemented in two or more microcontrollers, each one responding for specific features of the virtual device;</p></li>
+<li><p>On the other hand, a microcontroller may be the site for two or more virtual devices.</p></li>
+</ul>
+
+<p>The pieces of hardware are connected thru a physical network and they are responsible to decide through which communication channel a message must follow. Therefore, when a message is received, it has to know if the addressed device (first character of the message) is reachable through, for instance, the USB, UART, or Ethernet ports. The hardware piece sending the message does not know whether the destination was implemented in the next hardware piece, or the message will follow through two or more other hardware pieces and different communication channels. There is neither checking point, nor dynamic management of the physical network. Therefore, the designer must be watchful.</p>
+
+<h2>
+<a id="some-scientific-papers-in-which-the-serine-protocol-formerly-laia-protocol-was-used-in-developing-of-the-instrumentation" class="anchor" href="#some-scientific-papers-in-which-the-serine-protocol-formerly-laia-protocol-was-used-in-developing-of-the-instrumentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Some scientific papers in which the Serine Protocol (formerly LAIA Protocol) was used in developing of the instrumentation</h2>
+
+<ul>
+<li><p>Francisco, K. J. M. and C. L. do Lago. "A Compact and High-Resolution Version of a Capacitively Coupled Contactless Conductivity Detector." <em>Electrophoresis</em> <strong>30</strong>, no. 19 (2009): 3458-3464. <a href="http://onlinelibrary.wiley.com/doi/10.1002/elps.200900080/abstract">doi:10.1002/elps.200900080</a></p></li>
+<li><p>da Costa, E. T., C. A. Neves, G. M. Hotta, D. T. R. Vidal, M. F. Barros, A. A. Ayon, C. D. Garcia and C. L. do Lago. "Unmanned Platform for Long-Range Remote Analysis of Volatile Compounds in Air Samples." <em>Electrophoresis</em> <strong>33</strong>, no. 17 (2012): 2650-2659. <a href="http://onlinelibrary.wiley.com/doi/10.1002/elps.201200273/abstract">doi:10.1002/elps.201200273</a></p></li>
+<li><p>Francisco, K. J. M. and C. L. do Lago. "A Capillary Electrophoresis System with Dual Capacitively Coupled Contactless Conductivity Detection and Electrospray Ionization Tandem Mass Spectrometry." <em>Electrophoresis</em> <strong>37</strong>, no. 12 (2016): 1718-1724. <a href="http://onlinelibrary.wiley.com/doi/10.1002/elps.201600005/abstract">doi:10.1002/elps.201600005</a></p></li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/claudimir-lago/Serine-Protocol">Serine-protocol</a> is maintained by <a href="https://github.com/claudimir-lago">claudimir-lago</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
