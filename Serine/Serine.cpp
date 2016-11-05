@@ -1,7 +1,6 @@
 #include "Arduino.h"
 #include "Serine.h"
 
-
 /**
  * The function allows putting an unsigned long in a right-aligned field
  * of zeros in a message.
@@ -70,15 +69,11 @@ void SerineBuffer::putChar(char newChar) {
     if (newChar < 34) {
         if (newChar == '!') clear();
     } else {
-        if (newChar == ';') {
-            numberOfMessages++;
+        if (newChar < 127) {
             buffer[iWrite] = newChar;
             iWrite++;
             iWrite &= bmask;
-        } else {
-            buffer[iWrite] = newChar;
-            iWrite++;
-            iWrite &= bmask;
+            if (newChar == ';') numberOfMessages++;
         }
     }
 }
@@ -106,7 +101,7 @@ int SerineBuffer::getSpace() {
  *
  * @param message
  */
-void SerineBuffer::getMessage(char message[]) {
+void SerineBuffer::getMessage(char *message) {
     message[0] = NULL;
     if (numberOfMessages > 0) {
         byte i = 0;
@@ -124,4 +119,35 @@ void SerineBuffer::getMessage(char message[]) {
         message[i] = ';';
         message[i + 1] = NULL; // put a NULL char at the end position
     };
+}
+
+boolean serineChangeID(SerineVirtualDevice *vd, char *message) {
+    char serialMessage[MAX_MESSAGE - 5];
+    int i = 0;
+    do {
+        serialMessage[i] = message[5 + i];
+        i++;
+    } while (message[5 + i] != ';');
+    serialMessage[i] = NULL;
+    boolean sameSerial = strcmp(vd->serial, serialMessage) == 0;
+    if (sameSerial) vd->id = message[4];
+    return sameSerial;
+}
+
+void serineAnswerID(char toWhom, SerineVirtualDevice vd, char *answer) {
+    answer[0] = toWhom;
+    answer[1] = vd.id;
+    answer[2] = 'i';
+    answer[3] = NULL;
+    strncat(answer, vd.serial, 27);
+    strcat(answer, ";");
+}
+
+void serineIdontKnow(char *message, char id, char *answer) {
+    answer[0] = message[1];
+    answer[1] = id;
+    answer[2] = '?';
+    answer[3] = message[2];
+    answer[4] = ';';
+    answer[5] = NULL;
 }
