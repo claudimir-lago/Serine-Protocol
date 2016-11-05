@@ -34,16 +34,6 @@
 <li><p>The messages should be as readable and writable as possible by humans.</p></li>
 </ul>
 
-<p>The messages are exchanged among several logical pieces named virtual devices. A virtual device is something that is visualized by the members of the network as an entity that is able to do things, reacts to the received messages, and produces its own messages to the other members. A virtual device is implemented on one or more pieces of hardware. Therefore:</p>
-
-<ul>
-<li><p>A virtual device may be implemented in one exclusive microcontroller;</p></li>
-<li><p>A virtual device may be implemented in two or more microcontrollers, each one responding for specific features of the virtual device;</p></li>
-<li><p>On the other hand, a microcontroller may be the site for two or more virtual devices.</p></li>
-</ul>
-
-<p>The pieces of hardware are connected thru a physical network and they are responsible to decide through which communication channel a message must follow. Therefore, when a message is received, it has to know if the addressed device (first character of the message) is reachable through, for instance, the USB, UART, or Ethernet ports. The hardware piece sending the message does not know whether the destination was implemented in the next hardware piece, or the message will follow through two or more other hardware pieces and different communication channels. There is neither checking point, nor dynamic management of the physical network. Therefore, the designer must be watchful.</p>
-
 <h2>
 <a id="some-scientific-papers-in-which-the-serine-protocol-formerly-laia-protocol-was-used-in-developing-of-the-instrumentation" class="anchor" href="#some-scientific-papers-in-which-the-serine-protocol-formerly-laia-protocol-was-used-in-developing-of-the-instrumentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Some scientific papers in which the Serine Protocol (formerly LAIA Protocol) was used in developing of the instrumentation</h2>
 
