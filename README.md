@@ -1,4 +1,4 @@
-# Serine-Protocol
+# Serine Protocol
 
 ##### _Serine is an abbreviation for Serial Network and a chemical compound – after all, the protocol was born in a chemistry laboratory. Serine has two optical isomers: L-serine, the well-known proteinogenic amino acid, and D-serine, a signaling substance in bacteria and a neurotransmitter in humans. Therefore, Serine is anyway about communication among small and big things._
 
