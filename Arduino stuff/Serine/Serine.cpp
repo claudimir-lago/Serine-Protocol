@@ -22,6 +22,33 @@ void SerineBuffer::putUL(unsigned long x, int start, int end, char message[]) {
 }
 
 /**
+ * This function allows putting a Serine64-coded unsigned long in a right-aligned
+ * filed of Serine64 zeros in a message
+ *
+ * @param x the number
+ * @param start initial position (starts in zero)
+ * @param end the final position
+ * @param message the message string
+ */
+void SerineBuffer::putSerine64(unsigned long x, int start, int end, char message[]) {
+    char b[7]; // 0 to 4 294 967 295
+    int pos = 0;
+    do {
+        int val = x & 63;
+        b[pos] = val + 60;
+        x = x >> 6;
+        pos++;
+    } while (x > 0);
+    b[pos] = 0; // null at the end of the string
+    int field = end - start + 1; // size of the output field
+    int nDig = strlen(b); // number of digits of b
+    if (field < nDig) nDig = field; // limits nDec to the size of the output string
+    int offset = field - nDig; // relative initial position
+    for (int i = 0; i < offset; i++) message[i + start] = '<'; // char 60, which is the zero
+    for (int i = 0; i < nDig; i++) message[i + offset + start] = b[i];
+}
+
+/**
  * The function allow getting a unsigned long from the message.
  *
  * @param start initial position (starts in zero)
@@ -39,6 +66,27 @@ unsigned long SerineBuffer::getUL(int start, int end, char message[]) {
         x2 = sum << 1;
         x8 = x2 << 2;
         sum = x8 + x2 + (message[pos] - '0'); // (x8 + x2) is the same as multiplying by 10
+        pos++;
+    }
+    return sum;
+}
+
+/**
+ * The function allow getting a Serine64-coded unsigned long from the message.
+ *
+ * @param start initial position (starts in zero)
+ * @param end the final position
+ * @param message the message string
+ * @return the number in that field
+ */
+unsigned long SerineBuffer::getSerine64(int start, int end, char message[]) {
+    int pos = start;
+    while (message[pos] == '<') pos++;
+    unsigned long sum = 0;
+    unsigned long x64;
+    while (pos <= end) {
+        x64 = sum << 6;
+        sum = x64 + (message[pos] - '<');
         pos++;
     }
     return sum;
@@ -89,8 +137,8 @@ void SerineBuffer::putString(char newChars[]) {
 
 /**
  * Get the number of free bytes in the buffer.
- * 
- * @return the number of free bytes 
+ *
+ * @return the number of free bytes
  */
 int SerineBuffer::getSpace() {
     return BUFFERSIZE - ((iWrite - iRead) & 127);
@@ -150,4 +198,30 @@ void serineIdontKnow(char *message, char id, char *answer) {
     answer[3] = message[2];
     answer[4] = ';';
     answer[5] = NULL;
+}
+
+
+SerineChronometer::SerineChronometer() {
+    tempo0 = 0;
+}
+
+void
+SerineChronometer::zero() {
+    tempo0 = millis();
+}
+
+unsigned long
+SerineChronometer::now() {
+    return (millis() - tempo0);
+}
+
+void
+SerineChronometer::waitUntil(unsigned long time) {
+    while (now() < time) {
+    };
+}
+
+boolean
+SerineChronometer::expired(unsigned long time) {
+    return (now() >= time);
 }

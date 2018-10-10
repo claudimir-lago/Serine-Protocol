@@ -4,7 +4,7 @@
 #include "Arduino.h"
 
 #define BUFFERSIZE B10000000
-const int MAX_MESSAGE = 33; // Actually, the maximum size of the message is MAX_MESSAGE - 1
+const int MAX_MESSAGE = 33; // Actually, the maximum size is MAX_MESSAGE - 1
 
 struct SerineVirtualDevice {
     char id;
@@ -57,7 +57,20 @@ public:
     int getSpace();
     void getMessage(char message[]);
     void putUL(unsigned long x, int start, int end, char message[]);
+    void putSerine64(unsigned long x, int start, int end, char message[]);
     unsigned long getUL(int start, int end, char message[]);
+    unsigned long getSerine64(int start, int end, char message[]);
+};
+
+class SerineChronometer {
+private:
+  unsigned long tempo0;
+public:
+  SerineChronometer (void);
+  void zero (void);  // Reset the chronometer.
+  unsigned long now (void);  // Read the chronometer.
+  void waitUntil (unsigned long time); // Stay in a loop.
+  boolean expired (unsigned long time); // Allows testing if the time was reached.
 };
 
 #endif
